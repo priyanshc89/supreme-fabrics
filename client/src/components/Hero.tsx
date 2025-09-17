@@ -1,8 +1,19 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Award, Users, Calendar } from "lucide-react";
+import { useLocation } from "wouter";
 import heroImage from "@assets/generated_images/Textile_manufacturing_facility_hero_710a8b19.png";
 
 export default function Hero() {
+  const [, setLocation] = useLocation();
+
+  const handleViewProducts = () => {
+    setLocation("/products");
+  };
+
+  const handleContactUs = () => {
+    setLocation("/contact");
+  };
+
   return (
     <section className="relative overflow-hidden">
       {/* Hero Background */}
@@ -26,10 +37,21 @@ export default function Hero() {
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 mb-12">
-            <Button size="lg" className="bg-primary hover:bg-primary/90" data-testid="button-view-products">
+            <Button 
+              size="lg" 
+              className="bg-primary hover:bg-primary/90" 
+              data-testid="button-view-products"
+              onClick={handleViewProducts}
+            >
               View Our Products <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
-            <Button variant="outline" size="lg" className="border-white text-white hover:bg-white/10" data-testid="button-contact-us">
+            <Button 
+              variant="outline" 
+              size="lg" 
+              className="border-white text-white hover:bg-white/10" 
+              data-testid="button-contact-us"
+              onClick={handleContactUs}
+            >
               Contact Us
             </Button>
           </div>
