@@ -1,10 +1,36 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Award, Users, Calendar } from "lucide-react";
 import { useLocation } from "wouter";
-import heroImage from "@assets/generated_images/Textile_manufacturing_facility_hero_710a8b19.png";
+import { useState, useEffect } from "react";
+import heroImage1 from "@assets/generated_images/Textile_manufacturing_facility_hero_710a8b19.png";
+import heroImage2 from "@assets/generated_images/School_uniform_fabric_samples_bdf2889f.png";
+import heroImage3 from "@assets/generated_images/Security_uniform_fabric_collection_a6e53df7.png";
+import heroImage4 from "@assets/generated_images/Staff_uniform_fabric_samples_1370191d.png";
 
 export default function Hero() {
   const [, setLocation] = useLocation();
+  
+  // Array of hero images
+  const heroImages = [
+    { src: heroImage1, alt: "Supreme Fabrics Manufacturing Facility" },
+    { src: heroImage2, alt: "School Uniform Fabric Samples" },
+    { src: heroImage3, alt: "Security Uniform Fabric Collection" },
+    { src: heroImage4, alt: "Staff Uniform Fabric Samples" }
+  ];
+  
+  // State for current image index
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  // Auto-switch images every 3 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prevIndex) => 
+        prevIndex === heroImages.length - 1 ? 0 : prevIndex + 1
+      );
+    }, 3000);
+
+    return () => clearInterval(interval);
+  }, [heroImages.length]);
 
   const handleViewProducts = () => {
     setLocation("/products");
@@ -19,9 +45,9 @@ export default function Hero() {
       {/* Hero Background */}
       <div className="absolute inset-0">
         <img 
-          src={heroImage} 
-          alt="Supreme Fabrics Manufacturing Facility" 
-          className="h-full w-full object-cover"
+          src={heroImages[currentImageIndex].src} 
+          alt={heroImages[currentImageIndex].alt} 
+          className="h-full w-full object-cover transition-opacity duration-1000 ease-in-out"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-black/30" />
       </div>
@@ -81,6 +107,22 @@ export default function Hero() {
             </div>
           </div>
         </div>
+      </div>
+      
+      {/* Image Indicators */}
+      <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex space-x-2">
+        {heroImages.map((_, index) => (
+          <button
+            key={index}
+            className={`w-3 h-3 rounded-full transition-all duration-300 ${
+              index === currentImageIndex 
+                ? 'bg-white' 
+                : 'bg-white/50 hover:bg-white/75'
+            }`}
+            onClick={() => setCurrentImageIndex(index)}
+            aria-label={`Go to image ${index + 1}`}
+          />
+        ))}
       </div>
     </section>
   );
