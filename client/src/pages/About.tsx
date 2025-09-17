@@ -126,10 +126,10 @@ export default function About() {
                 <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
                   <Users className="h-10 w-10 text-primary" />
                 </div>
-                <h3 className="text-xl font-semibold mb-2" data-testid="text-management-name-1">Rajesh Kumar</h3>
+                <h3 className="text-xl font-semibold mb-2" data-testid="text-management-name-1">Ramprakash Chitlangia</h3>
                 <p className="text-primary font-medium mb-2" data-testid="text-management-position-1">Managing Director</p>
                 <p className="text-sm text-muted-foreground" data-testid="text-management-description-1">
-                  With over 25 years of experience in textile manufacturing, Rajesh leads our strategic vision and ensures operational excellence across all departments.
+                  With over 25 years of experience in textile manufacturing, Ramprakash leads our strategic vision and ensures operational excellence across all departments.
                 </p>
               </CardContent>
             </Card>
@@ -139,10 +139,10 @@ export default function About() {
                 <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
                   <Factory className="h-10 w-10 text-primary" />
                 </div>
-                <h3 className="text-xl font-semibold mb-2" data-testid="text-management-name-2">Priya Sharma</h3>
+                <h3 className="text-xl font-semibold mb-2" data-testid="text-management-name-2">Ayush Chitlanngia</h3>
                 <p className="text-primary font-medium mb-2" data-testid="text-management-position-2">Production Head</p>
                 <p className="text-sm text-muted-foreground" data-testid="text-management-description-2">
-                  Priya oversees our manufacturing operations, ensuring quality control and efficiency in our production processes with her 20+ years of expertise.
+                  Ayush oversees our manufacturing operations, ensuring quality control and efficiency in our production processes with her 20+ years of expertise.
                 </p>
               </CardContent>
             </Card>
@@ -152,10 +152,10 @@ export default function About() {
                 <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
                   <Award className="h-10 w-10 text-primary" />
                 </div>
-                <h3 className="text-xl font-semibold mb-2" data-testid="text-management-name-3">Amit Patel</h3>
+                <h3 className="text-xl font-semibold mb-2" data-testid="text-management-name-3">Priyansh Chitlangia</h3>
                 <p className="text-primary font-medium mb-2" data-testid="text-management-position-3">Quality Assurance Manager</p>
                 <p className="text-sm text-muted-foreground" data-testid="text-management-description-3">
-                  Amit ensures that every fabric meets our stringent quality standards, maintaining our reputation for excellence in the textile industry.
+                  Priyansh ensures that every fabric meets our stringent quality standards, maintaining our reputation for excellence in the textile industry.
                 </p>
               </CardContent>
             </Card>
