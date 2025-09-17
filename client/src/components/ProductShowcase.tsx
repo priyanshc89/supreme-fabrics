@@ -29,7 +29,7 @@ export default function ProductShowcase() {
     id: product.id,
     title: product.category,
     description: product.description,
-    image: product.image || '/placeholder-image.jpg',
+    image: product.image || '/placeholder-image.svg',
     features: getFeaturesByCategory(product.category)
   }));
 
@@ -59,12 +59,16 @@ export default function ProductShowcase() {
           {featuredProducts.map((product) => (
             <Card key={product.id} className="hover-elevate group" data-testid={`card-showcase-${product.id}`}>
               <CardHeader className="p-0">
-                <div className="aspect-[4/3] overflow-hidden rounded-t-lg">
+                <div className="aspect-[4/3] overflow-hidden rounded-t-lg bg-muted">
                   <img 
                     src={product.image} 
                     alt={product.title}
                     className="h-full w-full object-cover transition-transform group-hover:scale-105"
                     data-testid={`img-showcase-${product.id}`}
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.src = '/placeholder-image.svg';
+                    }}
                   />
                 </div>
               </CardHeader>

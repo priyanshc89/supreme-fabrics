@@ -1,5 +1,6 @@
 import { type User, type InsertUser, type Product, type InsertProduct } from "@shared/schema";
 import { randomUUID } from "crypto";
+import bcrypt from "bcryptjs";
 
 // modify the interface with any CRUD methods
 // you might need
@@ -25,8 +26,22 @@ export class MemStorage implements IStorage {
     this.users = new Map();
     this.products = new Map();
     
-    // Initialize with some sample products
+    // Initialize with some sample products and admin user
     this.initializeSampleProducts();
+    this.initializeAdminUser();
+  }
+
+  private async initializeAdminUser() {
+    // Create default admin user
+    const hashedPassword = await bcrypt.hash("password", 10);
+    const adminUser: InsertUser = {
+      username: "admin",
+      password: hashedPassword,
+    };
+    
+    const user = await this.createUser(adminUser);
+    // Update user to be admin
+    this.users.set(user.id, { ...user, isAdmin: true });
   }
 
   private async initializeSampleProducts() {
@@ -92,7 +107,7 @@ export class MemStorage implements IStorage {
 
   async createUser(insertUser: InsertUser): Promise<User> {
     const id = randomUUID();
-    const user: User = { ...insertUser, id };
+    const user: User = { ...insertUser, id, isAdmin: false };
     this.users.set(id, user);
     return user;
   }

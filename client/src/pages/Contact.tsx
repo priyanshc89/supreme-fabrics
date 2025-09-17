@@ -66,40 +66,46 @@ export default function Contact() {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background flex flex-col">
       <Header />
       
-      <main className="container mx-auto max-w-6xl px-6 py-8">
+      <main className="container mx-auto max-w-6xl px-6 py-12">
         {/* Page Header */}
-        <div className="text-center mb-12">
-          <h1 className="text-3xl md:text-4xl font-bold mb-4" data-testid="text-contact-title">
+        <div className="text-center mb-16">
+          <h1 className="text-4xl md:text-5xl font-bold mb-6" data-testid="text-contact-title">
             Contact Us
           </h1>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto" data-testid="text-contact-subtitle">
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed" data-testid="text-contact-subtitle">
             Get in touch with us for all your textile needs. We're here to help you find the perfect fabric solutions.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
           {/* Contact Information */}
-          <div>
-            <h2 className="text-2xl font-bold mb-6" data-testid="text-contact-info-title">
-              Get in Touch
-            </h2>
+          <div className="space-y-8">
+            <div>
+              <h2 className="text-2xl font-bold mb-4" data-testid="text-contact-info-title">
+                Get in Touch
+              </h2>
+              <p className="text-muted-foreground">
+                Reach out to us for any questions about our products or services.
+              </p>
+            </div>
             
-            <div className="space-y-6 mb-8">
+            <div className="space-y-4">
               {contactInfo.map((info, index) => (
-                <Card key={index} className="hover-elevate" data-testid={`card-contact-info-${index}`}>
+                <Card key={index} className="hover-elevate border-l-4 border-l-primary/20 hover:border-l-primary transition-all duration-200" data-testid={`card-contact-info-${index}`}>
                   <CardContent className="p-6">
                     <div className="flex items-start gap-4">
-                      <div className="p-3 bg-primary/10 rounded-lg">
-                        <info.icon className="h-6 w-6 text-primary" />
+                      <div className="p-3 bg-primary/10 rounded-lg flex-shrink-0 group-hover:bg-primary/20 transition-colors">
+                        <info.icon className="h-5 w-5 text-primary" />
                       </div>
-                      <div>
-                        <h3 className="font-semibold mb-1" data-testid={`text-contact-info-title-${index}`}>
+                      <div className="min-w-0 flex-1">
+                        <h3 className="font-semibold mb-2 text-foreground" data-testid={`text-contact-info-title-${index}`}>
                           {info.title}
                         </h3>
-                        <p className="text-muted-foreground whitespace-pre-line" data-testid={`text-contact-info-content-${index}`}>
+                        <p className="text-muted-foreground whitespace-pre-line leading-relaxed" data-testid={`text-contact-info-content-${index}`}>
                           {info.content}
                         </p>
                       </div>
@@ -112,25 +118,25 @@ export default function Contact() {
             {/* Additional Info */}
             <Card className="bg-muted/30">
               <CardContent className="p-6">
-                <h3 className="font-semibold mb-3" data-testid="text-additional-info-title">
+                <h3 className="font-semibold mb-4" data-testid="text-additional-info-title">
                   Why Choose Supreme Fabrics?
                 </h3>
-                <ul className="space-y-2 text-sm text-muted-foreground">
-                  <li className="flex items-center" data-testid="text-benefit-1">
-                    <span className="w-1.5 h-1.5 bg-primary rounded-full mr-2"></span>
-                    35+ years of textile manufacturing experience
+                <ul className="space-y-3 text-sm text-muted-foreground">
+                  <li className="flex items-start" data-testid="text-benefit-1">
+                    <span className="w-2 h-2 bg-primary rounded-full mr-3 mt-1.5 flex-shrink-0"></span>
+                    <span>35+ years of textile manufacturing experience</span>
                   </li>
-                  <li className="flex items-center" data-testid="text-benefit-2">
-                    <span className="w-1.5 h-1.5 bg-primary rounded-full mr-2"></span>
-                    Premium quality fabrics at competitive prices
+                  <li className="flex items-start" data-testid="text-benefit-2">
+                    <span className="w-2 h-2 bg-primary rounded-full mr-3 mt-1.5 flex-shrink-0"></span>
+                    <span>Premium quality fabrics at competitive prices</span>
                   </li>
-                  <li className="flex items-center" data-testid="text-benefit-3">
-                    <span className="w-1.5 h-1.5 bg-primary rounded-full mr-2"></span>
-                    Custom solutions for bulk orders
+                  <li className="flex items-start" data-testid="text-benefit-3">
+                    <span className="w-2 h-2 bg-primary rounded-full mr-3 mt-1.5 flex-shrink-0"></span>
+                    <span>Custom solutions for bulk orders</span>
                   </li>
-                  <li className="flex items-center" data-testid="text-benefit-4">
-                    <span className="w-1.5 h-1.5 bg-primary rounded-full mr-2"></span>
-                    Timely delivery across India
+                  <li className="flex items-start" data-testid="text-benefit-4">
+                    <span className="w-2 h-2 bg-primary rounded-full mr-3 mt-1.5 flex-shrink-0"></span>
+                    <span>Timely delivery across India</span>
                   </li>
                 </ul>
               </CardContent>
@@ -138,16 +144,22 @@ export default function Contact() {
           </div>
 
           {/* Contact Form */}
-          <div>
-            <Card>
-              <CardHeader>
-                <CardTitle data-testid="text-form-title">Send us a Message</CardTitle>
-              </CardHeader>
-              <CardContent>
+          <div className="space-y-8">
+            <div>
+              <h2 className="text-2xl font-bold mb-4" data-testid="text-form-title">
+                Send us a Message
+              </h2>
+              <p className="text-muted-foreground">
+                Fill out the form below and we'll get back to you within 24 hours.
+              </p>
+            </div>
+            
+            <Card className="shadow-lg">
+              <CardContent className="p-8">
                 <form onSubmit={handleSubmit} className="space-y-6">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <Label htmlFor="name">Full Name *</Label>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="space-y-2">
+                      <Label htmlFor="name" className="text-sm font-medium">Full Name *</Label>
                       <Input
                         id="name"
                         value={formData.name}
@@ -157,8 +169,8 @@ export default function Contact() {
                         data-testid="input-contact-name"
                       />
                     </div>
-                    <div>
-                      <Label htmlFor="email">Email *</Label>
+                    <div className="space-y-2">
+                      <Label htmlFor="email" className="text-sm font-medium">Email *</Label>
                       <Input
                         id="email"
                         type="email"
@@ -171,9 +183,9 @@ export default function Contact() {
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <Label htmlFor="phone">Phone Number</Label>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="space-y-2">
+                      <Label htmlFor="phone" className="text-sm font-medium">Phone Number</Label>
                       <Input
                         id="phone"
                         value={formData.phone}
@@ -182,8 +194,8 @@ export default function Contact() {
                         data-testid="input-contact-phone"
                       />
                     </div>
-                    <div>
-                      <Label htmlFor="company">Company/Organization</Label>
+                    <div className="space-y-2">
+                      <Label htmlFor="company" className="text-sm font-medium">Company/Organization</Label>
                       <Input
                         id="company"
                         value={formData.company}
@@ -194,8 +206,8 @@ export default function Contact() {
                     </div>
                   </div>
 
-                  <div>
-                    <Label htmlFor="inquiryType">Inquiry Type</Label>
+                  <div className="space-y-2">
+                    <Label htmlFor="inquiryType" className="text-sm font-medium">Inquiry Type</Label>
                     <Select value={formData.inquiryType} onValueChange={(value) => handleInputChange('inquiryType', value)}>
                       <SelectTrigger data-testid="select-inquiry-type">
                         <SelectValue placeholder="Select inquiry type" />
@@ -204,15 +216,17 @@ export default function Contact() {
                         <SelectItem value="school-uniforms">School Uniforms</SelectItem>
                         <SelectItem value="staff-uniforms">Staff Uniforms</SelectItem>
                         <SelectItem value="security-uniforms">Security Uniforms</SelectItem>
-                        <SelectItem value="corporate-suiting">Corporate Suiting</SelectItem>
+                        <SelectItem value="suiting-materials">Suiting Materials</SelectItem>
+                        <SelectItem value="corporate-wear">Corporate Wear</SelectItem>
+                        <SelectItem value="industrial-wear">Industrial Wear</SelectItem>
                         <SelectItem value="bulk-order">Bulk Order</SelectItem>
                         <SelectItem value="general">General Inquiry</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
 
-                  <div>
-                    <Label htmlFor="message">Message *</Label>
+                  <div className="space-y-2">
+                    <Label htmlFor="message" className="text-sm font-medium">Message *</Label>
                     <Textarea
                       id="message"
                       value={formData.message}
@@ -243,7 +257,6 @@ export default function Contact() {
           </div>
         </div>
       </main>
-
       <Footer />
     </div>
   );

@@ -31,12 +31,16 @@ export default function ProductCard({
   return (
     <Card className="hover-elevate h-full flex flex-col" data-testid={`card-product-${id}`}>
       <CardHeader className="p-0">
-        <div className="aspect-[4/3] overflow-hidden rounded-t-lg">
+        <div className="aspect-[4/3] overflow-hidden rounded-t-lg bg-muted">
           <img 
-            src={image} 
+            src={image || '/placeholder-image.svg'} 
             alt={name}
             className="h-full w-full object-cover transition-transform hover:scale-105"
             data-testid={`img-product-${id}`}
+            onError={(e) => {
+              const target = e.target as HTMLImageElement;
+              target.src = '/placeholder-image.svg';
+            }}
           />
         </div>
       </CardHeader>

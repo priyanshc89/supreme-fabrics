@@ -39,7 +39,7 @@ export default function About() {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background flex flex-col">
       <Header />
       
       <main className="container mx-auto max-w-6xl px-6 py-8">
@@ -117,6 +117,51 @@ export default function About() {
           </div>
         </section>
 
+        {/* Management Section */}
+        <section className="mb-16">
+          <h2 className="text-2xl font-bold text-center mb-8" data-testid="text-management-title">Management</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <Card className="text-center hover-elevate" data-testid="card-management-1">
+              <CardContent className="p-6">
+                <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Users className="h-10 w-10 text-primary" />
+                </div>
+                <h3 className="text-xl font-semibold mb-2" data-testid="text-management-name-1">Rajesh Kumar</h3>
+                <p className="text-primary font-medium mb-2" data-testid="text-management-position-1">Managing Director</p>
+                <p className="text-sm text-muted-foreground" data-testid="text-management-description-1">
+                  With over 25 years of experience in textile manufacturing, Rajesh leads our strategic vision and ensures operational excellence across all departments.
+                </p>
+              </CardContent>
+            </Card>
+            
+            <Card className="text-center hover-elevate" data-testid="card-management-2">
+              <CardContent className="p-6">
+                <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Factory className="h-10 w-10 text-primary" />
+                </div>
+                <h3 className="text-xl font-semibold mb-2" data-testid="text-management-name-2">Priya Sharma</h3>
+                <p className="text-primary font-medium mb-2" data-testid="text-management-position-2">Production Head</p>
+                <p className="text-sm text-muted-foreground" data-testid="text-management-description-2">
+                  Priya oversees our manufacturing operations, ensuring quality control and efficiency in our production processes with her 20+ years of expertise.
+                </p>
+              </CardContent>
+            </Card>
+            
+            <Card className="text-center hover-elevate" data-testid="card-management-3">
+              <CardContent className="p-6">
+                <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Award className="h-10 w-10 text-primary" />
+                </div>
+                <h3 className="text-xl font-semibold mb-2" data-testid="text-management-name-3">Amit Patel</h3>
+                <p className="text-primary font-medium mb-2" data-testid="text-management-position-3">Quality Assurance Manager</p>
+                <p className="text-sm text-muted-foreground" data-testid="text-management-description-3">
+                  Amit ensures that every fabric meets our stringent quality standards, maintaining our reputation for excellence in the textile industry.
+                </p>
+              </CardContent>
+            </Card>
+          </div>
+        </section>
+
         {/* Timeline */}
         <section className="mb-16">
           <h2 className="text-2xl font-bold text-center mb-8" data-testid="text-timeline-title">Our Journey</h2>
@@ -158,7 +203,6 @@ export default function About() {
           </div>
         </section>
       </main>
-
       <Footer />
     </div>
   );

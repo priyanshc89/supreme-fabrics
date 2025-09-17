@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useLocation } from "wouter";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ProductCard from "@/components/ProductCard";
@@ -6,18 +7,57 @@ import ProductForm from "@/components/ProductForm";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Plus, BarChart3, Package, Users, TrendingUp } from "lucide-react";
+import { Plus, BarChart3, Package, Users, TrendingUp, LogOut } from "lucide-react";
 import { useQuery, useMutation } from "@tanstack/react-query";
-import { apiRequest, queryClient } from "@/lib/queryClient";
+import { queryClient } from "@/lib/queryClient";
 import { type Product, type InsertProduct } from "@shared/schema";
 import { useToast } from "@/hooks/use-toast";
 
 export default function Admin() {
   const [showAddForm, setShowAddForm] = useState(false);
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
+  const [user, setUser] = useState<any>(null);
+  const [isAuthLoading, setIsAuthLoading] = useState(true);
+  const [, navigate] = useLocation();
   const { toast } = useToast();
 
-  const { data: products = [], isLoading, error } = useQuery<Product[]>({
+  // Check authentication on component mount
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const response = await fetch("/api/auth/me");
+        if (response.ok) {
+          const data = await response.json();
+          setUser(data.user);
+        } else {
+          // Redirect to login if not authenticated
+          navigate("/login?from=/admin");
+        }
+      } catch (error) {
+        console.error("Auth check failed:", error);
+        navigate("/login?from=/admin");
+      } finally {
+        setIsAuthLoading(false);
+      }
+    };
+
+    checkAuth();
+  }, [navigate]);
+
+  const handleLogout = async () => {
+    try {
+      await fetch("/api/auth/logout", { method: "POST" });
+      localStorage.removeItem("user");
+      setUser(null);
+      navigate("/login");
+      toast({ title: "Success", description: "Logged out successfully" });
+    } catch (error) {
+      console.error("Logout failed:", error);
+      toast({ title: "Error", description: "Logout failed", variant: "destructive" });
+    }
+  };
+
+  const { data: products = [], isLoading: productsLoading, error } = useQuery<Product[]>({
     queryKey: ["/api/products"],
     queryFn: async () => {
       const response = await fetch("/api/products");
@@ -113,11 +153,11 @@ export default function Admin() {
     // TODO: Implement product detail view
   };
 
-  if (isLoading) {
+  if (isAuthLoading) {
     return (
-      <div className="min-h-screen bg-background">
+      <div className="min-h-screen bg-background flex flex-col">
         <Header />
-        <main className="container mx-auto max-w-6xl px-6 py-8">
+        <main className="container mx-auto max-w-6xl px-6 py-8 flex-1">
           <div className="text-center py-12">
             <p className="text-muted-foreground">Loading admin dashboard...</p>
           </div>
@@ -127,11 +167,29 @@ export default function Admin() {
     );
   }
 
+  if (!user) {
+    return null; // Will redirect to login
+  }
+
+  if (productsLoading) {
+    return (
+      <div className="min-h-screen bg-background flex flex-col">
+        <Header />
+        <main className="container mx-auto max-w-6xl px-6 py-8 flex-1">
+          <div className="text-center py-12">
+            <p className="text-muted-foreground">Loading products...</p>
+          </div>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
   if (error) {
     return (
-      <div className="min-h-screen bg-background">
+      <div className="min-h-screen bg-background flex flex-col">
         <Header />
-        <main className="container mx-auto max-w-6xl px-6 py-8">
+        <main className="container mx-auto max-w-6xl px-6 py-8 flex-1">
           <div className="text-center py-12">
             <p className="text-destructive">Error loading admin dashboard. Please try again later.</p>
           </div>
@@ -142,7 +200,7 @@ export default function Admin() {
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background flex flex-col">
       <Header />
       
       <main className="container mx-auto max-w-6xl px-6 py-8">
@@ -153,17 +211,28 @@ export default function Admin() {
               Admin Portal
             </h1>
             <p className="text-muted-foreground" data-testid="text-admin-subtitle">
-              Manage your product catalog and inventory
+              Welcome back, {user.username}! Manage your product catalog and inventory
             </p>
           </div>
           
+          <div className="flex items-center gap-4">
+            <Button
+              variant="outline"
+              onClick={handleLogout}
+              className="flex items-center gap-2"
+            >
+              <LogOut className="h-4 w-4" />
+              Logout
+            </Button>
+          </div>
+          
           <Dialog open={showAddForm} onOpenChange={setShowAddForm}>
-            <DialogTrigger asChild>
-              <Button className="flex items-center gap-2" data-testid="button-add-product">
-                <Plus className="h-4 w-4" />
-                Add New Product
-              </Button>
-            </DialogTrigger>
+              <DialogTrigger asChild>
+                <Button className="flex items-center gap-2" data-testid="button-add-product">
+                  <Plus className="h-4 w-4" />
+                  Add New Product
+                </Button>
+              </DialogTrigger>
             <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
               <DialogHeader>
                 <DialogTitle>Add New Product</DialogTitle>
@@ -216,7 +285,7 @@ export default function Admin() {
                 <ProductCard
                   key={product.id}
                   {...product}
-                  image={product.image || '/placeholder-image.jpg'}
+                  image={product.image || '/placeholder-image.svg'}
                   isAdmin={true}
                   onView={handleViewProduct}
                   onEdit={(id) => setEditingProduct(products.find(p => p.id === id) || null)}
@@ -258,7 +327,6 @@ export default function Admin() {
           </Dialog>
         )}
       </main>
-
       <Footer />
     </div>
   );
