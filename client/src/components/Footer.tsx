@@ -1,5 +1,5 @@
 import { Link } from "wouter";
-import { MapPin, Phone, Mail, Clock } from "lucide-react";
+import { MapPin, Phone, Mail, Clock, Home, Package, Users, MessageCircle } from "lucide-react";
 
 export default function Footer() {
   return (
@@ -37,17 +37,18 @@ export default function Footer() {
             <h4 className="font-semibold mb-4" data-testid="text-footer-links-title">Quick Links</h4>
             <div className="space-y-3">
               {[
-                { href: "/", label: "Home" },
-                { href: "/products", label: "Products" },
-                { href: "/about", label: "About Us" },
-                { href: "/contact", label: "Contact Us" }
+                { href: "/", label: "Home", icon: Home },
+                { href: "/products", label: "Products", icon: Package },
+                { href: "/about", label: "About Us", icon: Users },
+                { href: "/contact", label: "Contact Us", icon: MessageCircle }
               ].map((link) => (
                 <Link 
                   key={link.href} 
                   href={link.href} 
-                  className="block text-sm text-muted-foreground hover:text-primary transition-colors"
+                  className="flex items-center text-sm text-muted-foreground hover:text-primary transition-colors"
                   data-testid={`link-footer-${link.label.toLowerCase().replace(' ', '-')}`}
                 >
+                  <link.icon className="h-4 w-4 mr-3 text-primary flex-shrink-0" />
                   {link.label}
                 </Link>
               ))}
